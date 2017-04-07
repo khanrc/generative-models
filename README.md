@@ -6,10 +6,11 @@
 
 ## Generative Adversarial Nets (GANs)
 
-* Vanilla GAN
-* NumGAN
-    * GAN for generating designated number image
+* vanillaGAN
+* cGAN
+    * conditional GAN for MNIST
 * DCGAN
+    * for MNIST
 
 ## Variational Autoencoders (VAEs)
 
