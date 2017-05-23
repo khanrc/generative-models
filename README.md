@@ -1,6 +1,6 @@
 # Generative models
 
-The project that implements generative models.
+The project that implements generative models. References are various but mainly refer to https://github.com/wiseodd/generative-models.
 
 based on python 2.7, tensorflow 0.12
 
@@ -12,13 +12,21 @@ based on python 2.7, tensorflow 0.12
 
 * GAN
 * cGAN
-    * conditional GAN for MNIST
 * DCGAN
     * for MNIST
+* CycleGAN (TODO)
 
 ## Variational Autoencoders (VAEs)
 
 * VAE
+* cVAE
+* Adversarial AE
+* DRAW (TODO)
+
+## FVBNs (TODO)
+
+* PixelCNN
+* PixelRNN (TODO)
 
 ## Others
 
