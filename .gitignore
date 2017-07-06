@@ -4,3 +4,4 @@ out*/
 .ipynb_checkpoints/
 tmp*/
 *.pyc
+*.log

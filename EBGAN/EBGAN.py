@@ -1,14 +1,14 @@
 
 # coding: utf-8
-
 # In[1]:
 
+
 # %matplotlib inline
+import matplotlib
+matplotlib.use('Agg')
 import tensorflow as tf
 import numpy as np
 from tensorflow.examples.tutorials.mnist import input_data
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
@@ -17,10 +17,12 @@ slim = tf.contrib.slim
 
 # In[2]:
 
+
 mnist = input_data.read_data_sets("../MNIST_data/", one_hot=True)
 
 
 # In[3]:
+
 
 import sys
 sys.path.insert(0, '../')
@@ -29,12 +31,15 @@ from utils import *
 
 # In[4]:
 
+
 # hyperparams
 z_dim = 64
 m = 5.
+pt_weight = 5.
 
 
 # In[5]:
+
 
 def generator(z, reuse=False):
     with tf.variable_scope('generator', reuse=reuse):
@@ -47,11 +52,13 @@ def generator(z, reuse=False):
 
 # In[6]:
 
+
 # lf: latent features
 def pt_regularizer(lf):
+    eps = 1e-8 # epsilon for numerical stability
     l2_norm = tf.sqrt(tf.reduce_sum(tf.square(lf), axis=1, keep_dims=True))
     expected_shape(l2_norm, [None, 1])
-    unit_lf = lf / l2_norm # this is unit vector?
+    unit_lf = lf / (l2_norm + eps) # this is unit vector?
     cos_sim = tf.square(tf.matmul(unit_lf, unit_lf, transpose_b=True)) # [N, h_dim] x [h_dim, N] = [N, N]
     N = tf.cast(tf.shape(lf)[0], tf.float32) # batch_size
     pt_loss = (tf.reduce_sum(cos_sim)-N) / (N*(N-1))
@@ -59,6 +66,7 @@ def pt_regularizer(lf):
 
 
 # In[7]:
+
 
 def discriminator(x, reuse=False):
     with tf.variable_scope('discriminator', reuse=reuse): # auto-encoder
@@ -72,11 +80,13 @@ def discriminator(x, reuse=False):
 
 # In[8]:
 
+
 def sample_z(m, n):
     return np.random.uniform(-1., 1., size=[m, n])
 
 
 # In[9]:
+
 
 class EBGAN():
     def __init__(self, name, use_pt_regularizer=False):
@@ -93,8 +103,9 @@ class EBGAN():
             D_fake_hinge = tf.reduce_mean(tf.maximum(0., m - D_fake_mse)) # hinge_loss
             D_loss = D_real_mse + D_fake_hinge
             G_loss = D_fake_mse
+            self.pt_loss = pt_weight * pt_regularizer(D_fake_lf) # pt_loss
             if use_pt_regularizer:
-                G_loss += pt_regularizer(D_fake_lf) # pt_loss
+                G_loss += self.pt_loss
 
             D_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=name+"/discriminator")
             G_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=name+"/generator")
@@ -113,6 +124,7 @@ class EBGAN():
 
 # In[10]:
 
+
 # build nets
 tf.reset_default_graph()
 
@@ -120,7 +132,8 @@ ebgan = EBGAN('ebgan')
 reg_ebgan = EBGAN('ebgan-pt', use_pt_regularizer=True)
 
 
-# In[12]:
+# In[11]:
+
 
 batch_size = 128
 n_iter = 1000000
@@ -132,22 +145,22 @@ sess.run(tf.global_variables_initializer())
 for i in range(n_iter):
     X_batch, _ = mnist.train.next_batch(batch_size)
     z_batch = sample_z(batch_size, z_dim)
-    _, _, D_loss_cur1, G_loss_cur1 = sess.run([ebgan.D_train_op, ebgan.G_train_op, ebgan.D_loss, ebgan.G_loss],
-                                              {ebgan.X: X_batch, ebgan.z: z_batch})
-    _, _, D_loss_cur2, G_loss_cur2 = sess.run([reg_ebgan.D_train_op, reg_ebgan.G_train_op, reg_ebgan.D_loss, reg_ebgan.G_loss],
-                                              {reg_ebgan.X: X_batch, reg_ebgan.z: z_batch})
+    _, _, D_loss_cur1, G_loss_cur1, pt_loss_cur1 = sess.run([ebgan.D_train_op, ebgan.G_train_op, ebgan.D_loss, ebgan.G_loss, ebgan.pt_loss],
+                                                            {ebgan.X: X_batch, ebgan.z: z_batch})
+    _, _, D_loss_cur2, G_loss_cur2, pt_loss_cur2 = sess.run([reg_ebgan.D_train_op, reg_ebgan.G_train_op, reg_ebgan.D_loss, reg_ebgan.G_loss, reg_ebgan.pt_loss],
+                                                            {reg_ebgan.X: X_batch, reg_ebgan.z: z_batch})
     
     if i % print_step == 0 or i == n_iter-1:
-        print('[{}/{}] (non-reg) D_loss: {:.4f}, G_loss: {:.4f} | (reg) D_loss: {:.4f}, G_loss: {:.4f}'.
-              format(i, n_iter, D_loss_cur1, G_loss_cur1, D_loss_cur2, G_loss_cur2))
+        print('[{}/{}] (non-reg) D_loss: {:.4f}, G_loss: {:.4f}, pt_loss {:.4f} | (reg) D_loss: {:.4f}, G_loss: {:.4f}, pt_loss: {:.4f}'.
+              format(i, n_iter, D_loss_cur1, G_loss_cur1, pt_loss_cur1, D_loss_cur2, G_loss_cur2, pt_loss_cur2))
         z_ = sample_z(16, z_dim)
         samples1 = sess.run(ebgan.fake, {ebgan.z: z_})
         samples2 = sess.run(reg_ebgan.fake, {reg_ebgan.z: z_})
         fig1 = plot(samples1)
         fig2 = plot(samples2)
         c = int((i+1) / print_step)
-        fig1.savefig('out/ebgan_{:0>4d}.png'.format(c), bbox_inches='tight')
-        fig2.savefig('out/ebgan-pt_{:0>4d}.png'.format(c), bbox_inches='tight')
+        fig1.savefig('out2/ebgan_{:0>4d}.png'.format(c), bbox_inches='tight')
+        fig2.savefig('out2/ebgan-pt_{:0>4d}.png'.format(c), bbox_inches='tight')
         plt.close(fig1)
         plt.close(fig2)
 
