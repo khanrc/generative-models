@@ -25,18 +25,19 @@ def expected_shape(tensor, expected):
         warnings.warn('wrong shape {} (expected shape is {})'.format(shape, expected))
 
 
-def plot(samples, wh=4, figratio=0.75):
+def plot(samples, shape=(4,4), figratio=0.75):
     """only for square-size samples
     wh = sqrt(samples.size)
     figratio: small-size = 0.75 (default) / big-size = 1.0
     """
-    if len(samples) != wh*wh:
-        print("Error: # of samples = {} but wh is {}".format(len(samples), wh))
+    if len(samples) != shape[0]*shape[1]:
+        print("Error: # of samples = {} but shape is {}".format(len(samples), shape))
         return
     
-    figsize = wh * figratio
-    fig = plt.figure(figsize=(figsize, figsize))
-    gs = gridspec.GridSpec(wh, wh)
+    h_figsize = shape[0] * figratio
+    w_figsize = shape[1] * figratio
+    fig = plt.figure(figsize=(w_figsize, h_figsize))
+    gs = gridspec.GridSpec(shape[0], shape[1])
     gs.update(wspace=0.05, hspace=0.05)
 
     for i, sample in enumerate(samples):
