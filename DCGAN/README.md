@@ -1,37 +1,34 @@
 # DCGAN
 
+Based on python 2.7, tensorflow 1.2
+
+* 마지막에 G_loss 가 치솟으면서 이미지가 확 망가지는 현상이 있음. 이유가 뭘까?
+* `utils.py` and `inputpipe.py` is general-purpose module - 하지만 refactoring 을 좀 해줘야 할 듯.
+
+## Results
+
+### Movie
+
+![movie](movie.gif)
+
+### TensorBoard
+
+![scalar](dcgan_scalar.png)
+![images](dcgan_images.png)
+![histogram](dcgan_histogram.png)
+
 ## ToDo
 
-* Input pipeline
-    1. Read from files using QueueRunner and Coordinator
-    2. Use TFRecords
+[x] Input pipeline
+    * Refactoring ...
 * Apply DCGAN to multiple dataset
-    * MNIST
-    * CelebA
-    * Flower?
-    * LSUN?
-* References
-    * https://github.com/carpedm20/DCGAN-tensorflow/blob/master/download.py
-        * just data_downloader for LSUN, CelebA, MNIST
-    * https://github.com/nmhkahn/DCGAN-tensorflow-slim/blob/master/dataset/download_and_convert.py
-        * data download and convert to TFRecords for CelebA, Flower
-
-
-* B-e-a-utiful tensorboard
-    * Try everything possible
-* Advanced:
-    * theoretical
-        * WGAN
-        * LSGAN?
-        * WGAN-GP
-        * BEGAN
-        * CramerGAN
-    * UDT
-        * DiscoGAN / CycleGAN
-        * DistanceGAN
-        * DTN
-* Misc
-    * make gif?
-        * how? ilguyi code is not working (just generate images in each step)
-    * add progress bar
+    [x] MNIST (DCGAN.ipynb)
+    [x] CelebA
+    [] Flower
+    [] LSUN
+[x] TensorBoard
+    * scalar, histogram, image
+[x] Misc
+    [x] make gif
+    [x] add progress bar
         * tqdm
