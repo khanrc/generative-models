@@ -19,16 +19,16 @@ Based on python 2.7, tensorflow 1.2
 
 ## ToDo
 
-[x] Input pipeline
+* [x] Input pipeline
     * Refactoring ...
 * Apply DCGAN to multiple dataset
-    [x] MNIST (DCGAN.ipynb)
-    [x] CelebA
-    [] Flower
-    [] LSUN
-[x] TensorBoard
+    * [x] MNIST (DCGAN.ipynb)
+    * [x] CelebA
+    * [] Flower
+    * [] LSUN
+* [x] TensorBoard
     * scalar, histogram, image
-[x] Misc
-    [x] make gif
-    [x] add progress bar
+* [x] Misc
+    * [x] make gif
+    * [x] add progress bar
         * tqdm
