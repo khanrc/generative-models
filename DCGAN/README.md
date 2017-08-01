@@ -20,12 +20,12 @@ Based on python 2.7, tensorflow 1.2
 ## ToDo
 
 * [x] Input pipeline
-    * Refactoring ...
+    * Refactoring (maybe someday when use it ...)
 * Apply DCGAN to multiple dataset
     * [x] MNIST (DCGAN.ipynb)
     * [x] CelebA
-    * [] Flower
-    * [] LSUN
+    * [ ] Flower
+    * [ ] LSUN
 * [x] TensorBoard
     * scalar, histogram, image
 * [x] Misc
