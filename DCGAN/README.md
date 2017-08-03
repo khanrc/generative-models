@@ -10,6 +10,12 @@ Based on python 2.7, tensorflow 1.2
 
 ## Results
 
+### After 25k-th global step
+
+1 epoch 당 1500~1600 step 정도 되므로(batch size 128), 약 16 epoch 쯤.
+
+![res](25000.png)
+
 ### Movie
 
 ![movie](movie.gif)
