@@ -10,21 +10,36 @@ Based on python 2.7, tensorflow 1.2
 
 ## Results
 
+* DCGAN 에서는 lr=0.0002 를 제안하지만 InfoGAN 을 보면 G는 lr=0.001 을 씀. 이게 위에서 언급한 dominate D 문제를 해결할 수 있을 것이라고 보고 적용해봄.
+* 실제로 결과가 더 좋았으며 이는 @carpedm20 등의 repo 에서 G 를 여러번 학습시키는 방식과도 유사함
+
 ### After 25k-th global step
 
 1 epoch 당 1500~1600 step 정도 되므로(batch size 128), 약 16 epoch 쯤.
 
-![res](25000.png)
+DCGAN (0.0002G):
+
+![res](assets/25000.png)
+
+DCGAN-0.001G:
+
+![res2](assets/25000_ifs.png)
 
 ### Movie
 
-![movie](movie.gif)
+DCGAN (0.0002G):
+
+![movie](assets/movie.gif)
+
+DCGAN-0.001G:
+
+![movie2](assets/movie_ifs.gif)
 
 ### TensorBoard
 
-![scalar](dcgan_scalar.png)
-![images](dcgan_images.png)
-![histogram](dcgan_histogram.png)
+![scalar](assets/dcgan_scalar.png)
+![images](assets/dcgan_images.png)
+![histogram](assets/dcgan_histogram.png)
 
 ## ToDo
 
