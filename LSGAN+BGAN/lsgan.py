@@ -50,6 +50,9 @@ class LSGAN(object):
 
     def sigmoid_scaler(self, value):
         """a <= c <= b 라고 가정
+
+        Caution:
+        README 에도 써놨지만 이렇게 할게 아니라 sigmoid 를 애초에 쓰면 안 됨;
         """
         size = self.b - self.a
         return value * size + self.a

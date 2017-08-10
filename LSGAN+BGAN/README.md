@@ -41,6 +41,13 @@ $$
 
 결과는 비슷하다고 함.
 
+### Caution
+
+* D 의 output 을 sigmoid 로 하면 학습이 되지 않는다. 
+    * MNIST 는 sigmoid 로 해도 된다. 그래서 첨엔 되는 줄 알았는데 CelebA 나 LSUN 같은건 안됨;
+* MSE 니까 sigmoid 로 하면 안되는 게 맞는 것 같음. Logistic regression 이 아니라 Linear regression 으로 discriminator 를 만들겠다는 것. sigmoid 를 쓸거면 log loss (cross-entropy) 를 써야.
+
+
 ### Thinks
 
 * 사실 상식적으로 생각해보면 CE loss 를 쓰는게 맞다. 근데 왜 위 예제에서는 LS loss 가 워킹하냐면 디시전 바운더리가 정확하지 않기 때문임. 다시 말해서 LSGAN 은, 이론적으로는, 디시전 바운더리를 정확히 잡을 수 없을 때 효과적인 방법이라고 할 수도 있음.
