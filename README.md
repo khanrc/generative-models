@@ -4,17 +4,20 @@ The project that implements generative models. References are various but mainly
 
 based on python 2.7, tensorflow 0.12
 
-## ToDo
-
-* Convert ipython notebook to python code with refactoring
 
 ## Generative Adversarial Nets (GANs)
 
 * GAN
 * cGAN
 * DCGAN
-    * for MNIST
-* CycleGAN (TODO)
+* LSGAN
+* BGAN
+* EBGAN
+* WGAN
+* WGAN-GP
+* InfoGAN
+* acGAN
+* DiscoGAN, CycleGAN
 
 ## Variational Autoencoders (VAEs)
 
@@ -30,4 +33,5 @@ based on python 2.7, tensorflow 0.12
 
 ## Others
 
-* Practice CNN with BN
+* TensorFlow input-pipeline
+* TensorBoard
