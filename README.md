@@ -4,6 +4,11 @@ The project that implements generative models. References are various but mainly
 
 based on python 2.7, tensorflow 0.12
 
+## ToDo
+
+- [ ] Datasets with diffent image shape
+	- MNIST 까지 커버하는 건 좀 어려울 것 같은데...
+	- 이건 따로 만드는 게 맞는 것 같음
 
 ## Generative Adversarial Nets (GANs)
 

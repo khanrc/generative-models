@@ -5,3 +5,10 @@ out*/
 tmp*/
 *.pyc
 *.log
+
+# generated items
+checkpoints/
+data/
+summary/
+eval/
+
